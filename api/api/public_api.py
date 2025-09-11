@@ -1,0 +1,46 @@
+import json
+import requests
+import time
+from pprint import pformat
+from requests import Response
+
+from tools.logger.logger import Logger
+from api.api_base import ApiJsonRequest
+
+
+class ApiError(Exception):
+    def __init__(self, error_msg):
+        msg = "Failed to make request: {}".format(error_msg)
+        super().__init__(msg)
+
+
+class PublicApi(ApiJsonRequest):
+
+    def __init__(self):
+        super(PublicApi, self).__init__("https", "catfact.ninja", "443")
+        self.log = Logger(__name__)
+
+    def get_facts(self, page=None, limit=None):
+        """
+        /facts
+
+        Returns:
+            dict
+        """
+        query_params = {}
+        if page is not None:
+            query_params["page"] = page
+        if limit is not None:
+            query_params["limit"] = limit
+        resp = self.make_request("get", "/facts", {}, query_params, {})
+        return resp
+
+    def get_breeds(self):
+        """
+        /breeds
+
+        Returns:
+            dict
+        """
+        resp = self.make_request("get", "/breeds", {}, {}, {})
+        return resp
