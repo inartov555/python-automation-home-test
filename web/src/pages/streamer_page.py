@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
 
+
 class StreamerPage(BasePage):
     # Possible popups (consent, mature content, cookie, login prompts, etc.)
     DISMISS_SELECTORS = [
