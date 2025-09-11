@@ -1,11 +1,10 @@
-import requests
 import pytest
 
 
-class TestApi:
+class TestApi(object):
 
     def test_get_facts_ok_and_schema(self):
-        resp = self.make_request("get", "/facts", is_return_resp_obj=True)
+        resp = self.public_api.make_request("get", "/facts", is_return_resp_obj=True)
         assert resp.status_code == 200
         body = resp.json()
         # Basic shape
@@ -16,14 +15,14 @@ class TestApi:
     @pytest.mark.parametrize('page,limit', [(1,5),(2,10),(3,3)])
     def test_pagination(self, page, limit):
         query_params = {'page': page, 'limit': limit}
-        resp = self.make_request("get", "/facts", query_params=query_params, is_return_resp_obj=True)
+        resp = self.public_api.make_request("get", "/facts", query_params=query_params, is_return_resp_obj=True)
         assert resp.status_code == 200
         body = resp.json()
         assert body.get('current_page') == page
         assert len(body.get('data', [])) <= limit
 
     def test_breeds_schema(self):
-        resp = self.make_request("get", "/breeds", is_return_response_obj=True)
+        resp = self.public_api.make_request("get", "/breeds", is_return_resp_obj=True)
         assert resp.status_code == 200
         body = resp.json()
         assert 'data' in body and isinstance(body['data'], list)
@@ -34,7 +33,7 @@ class TestApi:
 
     def test_invalid_limit_handled(self):
         query_params = {'limit': -1}
-        resp = self.make_request("get", "/facts", query_params=query_params, is_return_resp_obj=True)
+        resp = self.public_api.make_request("get", "/facts", query_params=query_params, is_return_resp_obj=True)
         # Some public APIs normalize invalid input; others return 4xx.
         assert resp.status_code in (200, 400, 422)
         # If 200, response should still be valid JSON with expected keys
