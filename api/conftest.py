@@ -13,5 +13,5 @@ def api_base(pytestconfig):
 
 
 @pytest.fixture(autouse=True, scope="class")
-def driver(request):
+def setup_api_testing(request):
     request.cls.public_api = PublicApi()
