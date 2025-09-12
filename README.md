@@ -12,6 +12,14 @@ This project implements an example, scalable Selenium test (with Page Object Mod
 
 Pop‑ups/modals are handled when present.
 
+Useful options:
+- `--device`: Chrome device name for emulation (e.g., `Pixel 5`, `iPhone 12 Pro`)
+- `--headless`: run headless Chrome (`true`/`false`, defaults to 'false')
+- `--base-url`: override base URL (defaults to `https://m.twitch.tv`)
+- `--window-size`: the web browser window size (defaults to 300,1000)
+
+> Tip: Selenium Manager auto-downloads the matching ChromeDriver. Make sure Google Chrome is installed.
+
 ---
 
 ## ✅ What the tests do (api module)
@@ -36,16 +44,6 @@ To start tests, you need:
 - 2. Run the run_tests.sh file next way: source run_tests.sh MODULE_NAME
      (where module name can be one of (api, web,))
 ```
-
-Useful options:
-- `--device`: Chrome device name for emulation (e.g., `Pixel 5`, `iPhone 12 Pro`)
-- `--headless`: run headless Chrome (`true`/`false`, defaults to 'false')
-- `--base-url`: override base URL (defaults to `https://m.twitch.tv`)
-- `--window-size`: the web browser window size (defaults to 300,1000)
-
-> Tip: Selenium Manager auto-downloads the matching ChromeDriver. Make sure Google Chrome is installed.
-
----
 
 ---
 
