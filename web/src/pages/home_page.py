@@ -34,8 +34,7 @@ class HomePage(BasePage):
         Clicking the Accept button on the "Cookies and Advertising Choices" overlay, if it is shown
         """
         try:
-            if self.wait_visible(self.TRANSITION_TO_APP_OVERLAY, 3):
-                if self.wait_clickable(self.CLOSE_OVERLAY):
+            if self.wait_visible(self.TRANSITION_TO_APP_OVERLAY, 2):
                 self.js_click(self.CLOSE_OVERLAY)
         except Exception:
             pass
