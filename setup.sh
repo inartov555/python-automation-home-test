@@ -11,7 +11,7 @@ fi
 PROJECT_NAME="python-automation-home-test"
 REPO="/home/oeaohoii/Documents/Moi/GitHub/home_test_aqa/$PROJECT_NAME"
 # path where workspace will be stored
-HOST_WORKSPACE=$HOME/TEST1/workspace
+HOST_WORKSPACE="$HOME/TEST1/workspace"
 # path where artifacts will be stored
 HOST_ARTIFACTS="$HOST_WORKSPACE/artifact"
 WORKSPACE=$HOST_WORKSPACE
