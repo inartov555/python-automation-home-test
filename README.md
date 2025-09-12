@@ -81,3 +81,7 @@ To start tests, you need:
 ## 🔧 Extending
 - Add more page objects under `src/pages`
 - Add markers and parametrization in `tests/`
+
+---
+
+![Demo animation](https://user-images.githubusercontent.com/1234567/abcdef.gif)
