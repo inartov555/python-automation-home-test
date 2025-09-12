@@ -2,12 +2,6 @@ from tools.logger.logger import Logger
 from api.api.api_base import ApiJsonRequest
 
 
-class ApiError(Exception):
-    def __init__(self, error_msg):
-        msg = "Failed to make request: {}".format(error_msg)
-        super().__init__(msg)
-
-
 class PublicApi(ApiJsonRequest):
 
     def __init__(self):
