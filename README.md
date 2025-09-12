@@ -66,9 +66,9 @@ This project contains example automated API tests using the public, no‑auth **
 
 ## ▶️ How to run
 To start tests, you need:
-- 1. Update setup.sh, add the correct paths for your computer
-- 2. Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME```
-     (where module name can be one of (api, web,))
+- Update setup.sh, add the correct paths for your computer
+- Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME```
+  (where module name can be one of (api, web,))
 
 ---
 
