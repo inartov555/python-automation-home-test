@@ -73,7 +73,7 @@ To start tests, you need:
 ---
 
 ## 📸 Artifacts
-- Test run log file, *.html test run report, screenshots are saved in $HOST_ARTIFACTS
+- Test run log file, *.html test run report, screenshots are saved in ```$HOST_ARTIFACTS```
   (it should be set in setup.sh) 
 
 ---
