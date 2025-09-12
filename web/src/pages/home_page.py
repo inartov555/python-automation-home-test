@@ -27,14 +27,14 @@ class HomePage(BasePage):
 
     def confirm_cookies_overlay_if_shown(self):
         """
-        Clicking the Accept button on the "Cookies and Advertising Choices" overlay, if it is shown
+        Clicking the Accept button on the "Cookies and Advertising Choices" overlay, if it's shown
         """
         self.wait_visible(self.ACCEPT_BUTTON)
         self.click(self.ACCEPT_BUTTON)
 
     def get_out_of_transition_to_app_overlay(self):
         """
-        Clicking the Accept button on the "Cookies and Advertising Choices" overlay, if it is shown
+        Clicking the Accept button on the "Cookies and Advertising Choices" overlay, if it's shown
         """
         try:
             if self.wait_visible(self.TRANSITION_TO_APP_OVERLAY, 2):
