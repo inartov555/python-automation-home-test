@@ -1,8 +1,11 @@
 from selenium.webdriver.common.by import By
+
 from .base_page import BasePage
+from tools.logger.logger import Logger
 
 
 class HomePage(BasePage):
+    log = Logger(__name__)
     # SEARCH_ICON = (By.CSS_SELECTOR, "button[aria-label='Search'] , a[aria-label='Search'] , a[href*='search']")
     SEARCH_ICON = (By.XPATH, "//a[@href='/directory']/div/div")
     # Accept cookies overlay

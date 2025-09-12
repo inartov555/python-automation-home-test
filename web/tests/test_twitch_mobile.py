@@ -1,12 +1,9 @@
+import pytest
 import time
 
-import pytest
-
 from tools.logger.logger import Logger
-# from web.conftest import setup_confirm_cookies
 
 @pytest.mark.mobile
-# @pytest.mark.usefixtures("setup_confirm_cookies")
 class TestTwitchMobile(object):
     log = Logger(__name__)
 
@@ -18,9 +15,7 @@ class TestTwitchMobile(object):
         # 3. Type query
         self.search_page.search("StarCraft II")
         # 4. Scroll down twice (small delays to simulate user)
-        for _ in range(2):
-            self.driver.execute_script("window.scrollBy(0, 700);")
-            time.sleep(1)
+        self.search_page.scroll_by_xy_repeat(times=2)
         # 5. Open a streamer
         self.search_page.open_first_streamer()
         # 6. Wait for streamer page to load; take screenshot
