@@ -9,7 +9,7 @@ if [ -z $1 ]; then
 fi
 
 PROJECT_NAME="python-automation-home-test"
-REPO="/home/oeaohoii/Documents/Moi/GitHub/home_test_aqa/$PROJECT_NAME"
+REPO="$HOME/$PROJECT_NAME"
 # path where workspace will be stored
 HOST_WORKSPACE="$HOME/TEST1/workspace"
 # path where artifacts will be stored
