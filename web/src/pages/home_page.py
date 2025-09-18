@@ -29,8 +29,13 @@ class HomePage(BasePage):
         """
         Clicking the Accept button on the "Cookies and Advertising Choices" overlay, if it's shown
         """
-        self.wait_visible(self.ACCEPT_BUTTON)
-        self.click(self.ACCEPT_BUTTON)
+        try:
+            self.wait_visible(self.ACCEPT_BUTTON)
+            self.click(self.ACCEPT_BUTTON)
+        except Exception:
+            # This method is not supposed to check if accept cookies overlay should be shown,
+            # so we're ok if it's not shown
+            pass
 
     def get_out_of_transition_to_app_overlay(self):
         """
@@ -40,4 +45,5 @@ class HomePage(BasePage):
             if self.wait_visible(self.TRANSITION_TO_APP_OVERLAY, 2):
                 self.js_click(self.CLOSE_OVERLAY)
         except Exception:
+            # This method is not supposed to check if switch to app overlay should be shown, so we're ok if it's not shown
             pass
