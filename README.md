@@ -74,12 +74,6 @@ This project contains example automated API tests using the public, no‑auth **
 
 ---
 
-## 📸 Artifacts
-- Test run log file, *.html test run report, screenshots are saved in ```$HOST_ARTIFACTS```
-  (it should be set in setup.sh) 
-
----
-
 ## 🔧 Extending
 - Add more page objects under `src/pages`
 - Add markers and parametrization in `tests/`
