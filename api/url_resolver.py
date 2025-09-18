@@ -34,10 +34,12 @@ class UrlResolver(SlsApi):
     def get_base_url_and_port(self, url_string, is_port_pointed):
         """
         Expected URL may look like this: www.xperi.com:443
+
         Args:
             url_string (str): Either parsed.netloc or parsed.path (if parsed.netloc param is not set),
                               basically it should be URL
             is_port_pointed (bool): Use condition e.g. port_regex.search(parsed.netloc) is None
+
         Returns:
             tuple, (b_url, p_port)
         """
