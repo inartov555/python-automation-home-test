@@ -1,8 +1,7 @@
 ## ▶️ How to run
 To start tests, you need:
-- Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME PATH_TO_THE_ROJECT```
-  (where module name can be one of (api, web,))
-  (PATH_TO_THE_ROJECT: excluding the project folder name)
+- Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME PATH_TO_THE_PROJECT```
+  (where MODULE_NAME can be one of (api, web,), PATH_TO_THE_PROJECT: excluding the project folder name)
 
 ---
 
