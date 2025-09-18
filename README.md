@@ -1,4 +1,4 @@
-## ▶️ How to run
+# ▶️ How to run
 NOTE: when you start the source run_tests.sh script, it copies the project to other directory to avoid adding cached files,
  and venv directory to the project folder
 
