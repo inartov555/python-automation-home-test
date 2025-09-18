@@ -32,8 +32,6 @@ Useful options:
 
 ---
 
----
-
 # API Tests – Cat Facts (Pytest + Requests)
 
 This project contains example automated API tests using the public, no‑auth **Cat Facts API** (`https://catfact.ninja`). It demonstrates parametrization, schema checks, and negative testing.

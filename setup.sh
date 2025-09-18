@@ -1,21 +1,49 @@
 #!/bin/bash
 
-# $1: the module name to run tests, e.g. web
+# Input parameters:
+#   - $1: the module name to run tests, currently supported (api, web)
+#   - $2: the path to the project ( !!! excluding the project folder name !!! ), defaults to $DEFAULT_REPO_PATH
 # Exported variables: HOST_ARTIFACTS, ROOT_VENV, TEST_VENV
 
+
 if [ -z $1 ]; then
-  echo "ERROR: module path must be set to run the tests"
+  echo "ERROR: module name must be set to run the tests"
   return 1
 fi
 
-PROJECT_NAME="python-automation-home-test"
-REPO="$HOME/$PROJECT_NAME"
+DEFAULT_PROJECT_NAME="python-automation-home-test"
+DEFAULT_REPO_PATH="$HOME/$DEFAULT_PROJECT_NAME"
+
+# Repo path defaults to $DEFAULT_REPO_PATH
+if [[ -z "$2" ]]; then
+  echo "WARNING: no path passed for the project, defaulting to $DEFAULT_REPO_PATH"
+  REPO="$DEFAULT_REPO_PATH"
+  if [[ ! -d "$REPO" ]]; then
+    echo "ERROR: Default path $DEFAULT_REPO_PATH for the repo does not exist"
+    return 1
+  fi
+elif [[ ! -d "$2" ]]; then
+  echo "ERROR: Provided path $2 for the repo does not exist"
+  return 1
+else
+  if [[ "${2: -1}" == "/" ]]; then
+    REPO="$2$DEFAULT_PROJECT_NAME"
+  else
+    REPO="$2/$DEFAULT_PROJECT_NAME"
+  fi
+  echo "Using $REPO path for the repo"
+fi
+
 # path where workspace will be stored
 HOST_WORKSPACE="$HOME/TEST1/workspace"
 # path where artifacts will be stored
 HOST_ARTIFACTS="$HOST_WORKSPACE/artifact"
-WORKSPACE=$HOST_WORKSPACE
-export HOST_ARTIFACTS=$HOST_ARTIFACTS
+export HOST_ARTIFACTS="$HOST_ARTIFACTS"
+
+echo "Host workspace directory (copied project + logs, screenshots, etc.):"
+echo "  >>> $HOST_WORKSPACE"
+echo "Host artifacts directory (logs, screenshots, etc.):"
+echo "  >>> $HOST_ARTIFACTS"
 
 mkdir -p "$HOST_ARTIFACTS"
 chmod a+rw -R "$HOST_ARTIFACTS"
