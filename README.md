@@ -1,3 +1,11 @@
+## ▶️ How to run
+To start tests, you need:
+- Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME PATH_TO_THE_ROJECT```
+  (where module name can be one of (api, web,))
+  (PATH_TO_THE_ROJECT: excluding the project folder name)
+
+---
+
 # Web Tests – Twitch Mobile (Selenium + Pytest)
 
 This project implements an example, scalable Selenium test (with Page Object Model) for the mobile Twitch site using Chrome mobile emulation.
@@ -59,14 +67,6 @@ This project contains example automated API tests using the public, no‑auth **
 - Selenium 4.x
 - Pytest
 - Chrome with mobile emulation (Pixel 5 by default)
-
----
-
-## ▶️ How to run
-To start tests, you need:
-- Update setup.sh, add the correct paths for your computer
-- Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME```
-  (where module name can be one of (api, web,))
 
 ---
 
