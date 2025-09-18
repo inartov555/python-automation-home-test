@@ -48,7 +48,8 @@ To start tests, you need:
 ---
 
 ## 📸 Artifacts
-- Screenshots are saved under `artifacts/` with timestamped filenames.
+- Test run log file, *.html test run report, screenshots are saved in $HOST_ARTIFACTS
+  (it should be set in setup.sh) 
 
 ---
 
