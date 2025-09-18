@@ -1,8 +1,13 @@
 import os
-import pytest
 from datetime import datetime
+
+import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+from src.pages.home_page import HomePage
+from src.pages.search_page import SearchPage
+from src.pages.streamer_page import StreamerPage
 
 
 def pytest_addoption(parser):
@@ -10,6 +15,13 @@ def pytest_addoption(parser):
     parser.addoption("--device", action="store", default="Pixel 5", help="Chrome mobile emulation device name")
     parser.addoption("--headless", action="store", default="true", help="Run headless Chrome (true/false)")
     parser.addoption("--screenshot-dir", action="store", default="artifacts", help="Directory for screenshots")
+
+
+@pytest.fixture(autouse=True, scope="class")
+def setup_for_testing(request):
+    request.cls.home_page = HomePage(driver)
+    request.cls.search_page = SearchPage(driver)
+    request.cls.streamer_page = StreamerPage(driver)
 
 
 @pytest.fixture(scope="session")
@@ -55,26 +67,6 @@ def driver(pytestconfig):
     driver.set_page_load_timeout(60)
     yield driver
     driver.quit()
-
-
-'''
-def driver():
-    options = webdriver.ChromeOptions()
-
-    # Керувати headless через змінну середовища (зручно для CI)
-    headless = os.getenv("HEADLESS", "0") == "1"
-    if headless:
-        options.add_argument("--headless=new")  # увімкнути лише коли HEADLESS=1
-
-    options.add_argument("--start-maximized")          # або:
-    # options.add_argument("--window-size=1280,800")
-
-    # щоб вікно не закривалось після quit() — корисно для дебага
-    options.add_experimental_option("detach", True)
-
-    drv = webdriver.Chrome(options=options)
-    return drv
-'''
 
 
 @pytest.fixture
