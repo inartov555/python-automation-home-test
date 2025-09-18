@@ -122,8 +122,8 @@ class Logger:
             logger_name (str): name of logger file handler to be applied for
         """
         root_logger = logging.getLogger()
-        if not os.path.exists(os.path.dirname(log_file_dir)):
-            os.makedirs(os.path.dirname(log_file_dir))
+        if not os.path.exists(os.path.dirname(file_name)):
+            os.makedirs(os.path.dirname(file_name))
 
         loggers_list = []
         loggers_list.append(root_logger)

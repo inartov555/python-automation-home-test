@@ -106,9 +106,10 @@ class BasePage:
 
     def find_first_visible_in_viewport(self, locator, min_ratio=0.5, top_margin=90, bottom_margin=0):
         """
-        Повертає перший елемент, який хоча б на min_ratio (0..1) видимий у в’юпорті
-        і не перекритий іншими елементами.
-        top_margin: пікселі зверху (для липкого хедера Twitch ~ 80-100)
+        Get the 1st visible element which is visible at list by min_ratio in view port and not covered by other elements.
+
+        Returns:
+            WebElement
         """
         by, value = locator
 

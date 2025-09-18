@@ -1,6 +1,13 @@
+import os
+from datetime import datetime
+
 import pytest
 
 from api.api.public_api import PublicApi
+from tools.logger.logger import Logger
+
+
+log = Logger(__name__)
 
 
 def pytest_addoption(parser):
@@ -15,3 +22,35 @@ def api_base(pytestconfig):
 @pytest.fixture(autouse=True, scope="class")
 def setup_api_testing(request):
     request.cls.public_api = PublicApi()
+
+
+def timestamped_path(file_name, file_ext, path_to_file=os.getenv("HOST_ARTIFACTS")):
+    """
+    Args:
+        file_name (str): e.g. screenshot
+        file_ext (str): file extention, e.g., png
+        path_to_file (str): e.g. /home/user/test_dir/artifacts/
+    """
+    ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S.%f")
+    return os.path.join(path_to_file, f"{file_name}-{ts}.{file_ext}")
+
+
+@pytest.fixture(autouse=True, scope="session")
+def add_loggers(request):
+    """
+    The fixture to configure loggers
+    It uses built-in pytest arguments to configure loggigng level and files
+
+    Parameters:
+        log_level or --log-level general log level for capturing
+        log_file_level or --log-file-level  level of log to be stored to a file. Usually lower than general log
+        log_file or --log-file  path where logs will be saved
+    """
+    artifacts_folder_default = os.getenv("HOST_ARTIFACTS")
+    log_level = "DEBUG"
+    log_file_level = "DEBUG"
+    log_file = os.path.join(timestamped_path("pytest", "log", artifacts_folder_default))
+    log.setup_cli_handler(level=log_level)
+    log.setup_filehandler(level=log_file_level, file_name=log_file)
+    log.info("General loglevel: '{}', File: '{}'".format(log_level, log_file_level))
+    log.info("Test's logs will be stored: '{}'".format(log_file))

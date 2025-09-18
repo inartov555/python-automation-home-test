@@ -5,7 +5,7 @@
 
 if [ -z $1 ]; then
   echo "ERROR: module path must be set to run the tests"
-  exit 1
+  return 1
 fi
 
 PROJECT_NAME="python-automation-home-test"
@@ -15,7 +15,7 @@ HOST_WORKSPACE=$HOME/TEST1/workspace
 # path where artifacts will be stored
 HOST_ARTIFACTS="$HOST_WORKSPACE/artifact"
 WORKSPACE=$HOST_WORKSPACE
-export $HOST_ARTIFACTS
+export HOST_ARTIFACTS=$HOST_ARTIFACTS
 
 mkdir -p "$HOST_ARTIFACTS"
 chmod a+rw -R "$HOST_ARTIFACTS"
