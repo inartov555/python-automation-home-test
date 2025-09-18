@@ -84,4 +84,4 @@ To start tests, you need:
 
 ---
 
-![Demo animation](https://user-images.githubusercontent.com/1234567/abcdef.gif)
+![Demo animation](https://github.com/inartov555/python-automation-home-test/blob/main/demo/DEMO%20Sep-12-2025.gif)
