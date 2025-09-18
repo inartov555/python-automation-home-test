@@ -24,45 +24,20 @@ Pop‑ups/modals are handled when present.
 
 ## ▶️ How to run
 ```bash
-python -m venv .venv && . .venv/bin/activate  # or .venv\Scripts\activate on Windows
-pip install -r requirements.txt
-pytest -v --headless=true --device="Pixel 5" --screenshot-dir=artifacts
+To start tests, you need:
+- 1. Update setup.sh, add the correct paths for your computer
+- 2. Run the run_tests.sh file next way: source run_tests.sh MODULE_NAME (where module name can be one of (api, web,))
 ```
 
 Useful options:
 - `--device`: Chrome device name for emulation (e.g., `Pixel 5`, `iPhone 12 Pro`)
-- `--headless`: run headless Chrome (`true`/`false`)
+- `--headless`: run headless Chrome (`true`/`false`, defaults to 'false')
 - `--base-url`: override base URL (defaults to `https://m.twitch.tv`)
-- `--screenshot-dir`: where to save screenshots
+- `--window-size`: the web browser window size (defaults to 300,1000)
 
 > Tip: Selenium Manager auto-downloads the matching ChromeDriver. Make sure Google Chrome is installed.
 
 ---
-
-## 🧱 Project structure
-```
-web-tests/
-├─ src/
-│  └─ pages/
-│     ├─ base_page.py
-│     ├─ home_page.py
-│     ├─ search_page.py
-│     └─ streamer_page.py
-├─ tests/
-│  └─ test_twitch_mobile.py
-├─ conftest.py
-├─ requirements.txt
-├─ pytest.ini
-└─ README.md
-```
-
----
-
-## 🧪 Test case table
-
-| ID | Title | Steps | Expected result | Notes |
-|----|-------|-------|-----------------|-------|
-| WEB-001 | Search and open streamer | Open home → tap search → type `StarCraft II` → scroll 2× → open a streamer | Streamer page loads; screenshot saved | Handles modals/popups if present |
 
 ---
 
