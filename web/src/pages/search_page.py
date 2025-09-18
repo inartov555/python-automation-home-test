@@ -1,11 +1,17 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+
 from .base_page import BasePage
+from tools.logger.logger import Logger
 
 
 class SearchPage(BasePage):
+    log = Logger(__name__)
     SEARCH_INPUT = (By.CSS_SELECTOR, "input[type='search'], input[aria-label='Search']")
-    FIRST_RESULT = (By.XPATH, "//section//a[starts-with(@href, '/videos/')] | //section//div[class='Layout-sc-1xcs6mc-0 doaFqY']")
+    FIRST_RESULT = (
+        By.XPATH,
+        "//section//a[starts-with(@href, '/videos/')] | "
+        "//section//button[@class='ScCoreLink-sc-16kq0mq-0 cZfgmJ InjectLayout-sc-1i43xsx-0 ggvZjN tw-link']")
 
     def search(self, query):
         self.type(self.SEARCH_INPUT, query + Keys.ENTER)
@@ -13,5 +19,6 @@ class SearchPage(BasePage):
 
     def open_first_streamer(self):
         # Heuristic: click the first visible result anchor
-        el = self.wait_visible(self.FIRST_RESULT)
+        self.wait_visible(self.FIRST_RESULT)
+        el = self.focus_first_visible(self.FIRST_RESULT)
         el.click()
