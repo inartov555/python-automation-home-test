@@ -30,7 +30,19 @@ def driver(pytestconfig):
     headless = pytestconfig.getoption("--headless").lower() == "true"
 
     options = Options()
-    mobile_emulation = { "deviceName": device }
+    # mobile_emulation = { "deviceName": device }
+    mobile_emulation = {
+        "deviceMetrics": {
+            "width": 393,    # логічна ширина Pixel 5 (dp)
+            "height": 851,   # логічна висота Pixel 5 (dp)
+            "pixelRatio": 2.75
+        },
+        "userAgent": (
+            "Mozilla/5.0 (Linux; Android 11; Pixel 5) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Mobile Safari/537.36"
+        )
+    }
     options.add_experimental_option("mobileEmulation", mobile_emulation)
     if headless:
         options.add_argument("--headless=new")
@@ -43,6 +55,26 @@ def driver(pytestconfig):
     driver.set_page_load_timeout(60)
     yield driver
     driver.quit()
+
+
+'''
+def driver():
+    options = webdriver.ChromeOptions()
+
+    # Керувати headless через змінну середовища (зручно для CI)
+    headless = os.getenv("HEADLESS", "0") == "1"
+    if headless:
+        options.add_argument("--headless=new")  # увімкнути лише коли HEADLESS=1
+
+    options.add_argument("--start-maximized")          # або:
+    # options.add_argument("--window-size=1280,800")
+
+    # щоб вікно не закривалось після quit() — корисно для дебага
+    options.add_experimental_option("detach", True)
+
+    drv = webdriver.Chrome(options=options)
+    return drv
+'''
 
 
 @pytest.fixture
