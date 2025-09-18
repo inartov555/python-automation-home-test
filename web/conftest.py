@@ -4,21 +4,25 @@ from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+
 def pytest_addoption(parser):
     parser.addoption("--base-url", action="store", default="https://m.twitch.tv", help="Base URL for the site")
     parser.addoption("--device", action="store", default="Pixel 5", help="Chrome mobile emulation device name")
     parser.addoption("--headless", action="store", default="true", help="Run headless Chrome (true/false)")
     parser.addoption("--screenshot-dir", action="store", default="artifacts", help="Directory for screenshots")
 
+
 @pytest.fixture(scope="session")
 def base_url(pytestconfig):
     return pytestconfig.getoption("--base-url").rstrip("/")
+
 
 @pytest.fixture(scope="session")
 def screenshot_dir(pytestconfig):
     path = pytestconfig.getoption("--screenshot-dir")
     os.makedirs(path, exist_ok=True)
     return path
+
 
 @pytest.fixture(scope="session")
 def driver(pytestconfig):
@@ -39,6 +43,7 @@ def driver(pytestconfig):
     driver.set_page_load_timeout(60)
     yield driver
     driver.quit()
+
 
 @pytest.fixture
 def timestamped_path(screenshot_dir):

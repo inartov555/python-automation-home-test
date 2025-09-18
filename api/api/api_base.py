@@ -33,7 +33,7 @@ class ApiBase:
         """
         self.headers.update(new_headers)
 
-    def make_request(self, method, uri, payload, query_params, headers=None):
+    def make_request(self, method, uri, payload={}, query_params={}, headers={}):
         """
         Getting the Response object.
         Log lines are consolidated into single variable to support concurrent requests, if any are added.
@@ -91,15 +91,15 @@ class ApiBase:
                                       },
                               }
         except Exception as ex:
-            message = "\n{}".format(BEGIN_REQ)
+            message = "\n{}".format(self.BEGIN_REQ)
             message += "\nURL: {} \nMethod: {} \nheaders: {} \nparams: {} \npayload: {}".format(
                 url, method, pformat(self.headers), query_params, payload)
             message += "\nError: {}".format(ex)
-            message += "\n{}".format(END_REQ)
+            message += "\n{}".format(self.END_REQ)
             self.log.error(message)
             raise ApiError(message)
         if method in methods_config.keys():
-            message = "\n{}".format(BEGIN_REQ)
+            message = "\n{}".format(self.BEGIN_REQ)
             message += "\nRequest config: {}".format(methods_config[method])
             try:
                 resp = client.request(**methods_config[method])
@@ -107,13 +107,14 @@ class ApiBase:
                 message += "\nResponse text: {}".format(resp.text)
                 message += "\nResponse headers: {}".format(resp.headers)
                 message += "\nResponse status code: {}".format(resp.status_code)
+                message += "\n{}".format(self.END_REQ)
                 self.log.debug(message)
             except Exception as ex:
                 message += "\nResponse URL: {}".format(resp.url)
                 message += "\nResponse text: {}".format(resp.text)
                 message += "\nResponse headers: {}".format(resp.headers)
                 message += "\nResponse status code: {}".format(resp.status_code)
-                message += "\n{}".format(END_REQ)
+                message += "\n{}".format(self.END_REQ)
                 self.log.error(message)
                 raise ApiError(message)
             client.close()
@@ -131,7 +132,7 @@ class ApiJsonRequest(ApiBase):
                    "Accept": "application/json"}
         self.append_headers(headers)
 
-    def make_request(self, method, uri, payload, query_params, headers=None,
+    def make_request(self, method, uri, payload={}, query_params={}, headers={},
                      is_return_resp_obj=False, raise_error_if_failed=None):
         """
         Args:
