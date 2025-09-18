@@ -5,7 +5,6 @@
 #   - $2: the path to the project ( !!! excluding the project folder name !!! ), defaults to $DEFAULT_REPO_PATH
 # Exported variables: HOST_ARTIFACTS, ROOT_VENV, TEST_VENV
 
-
 if [ -z $1 ]; then
   echo "ERROR: module name must be set to run the tests"
   return 1
