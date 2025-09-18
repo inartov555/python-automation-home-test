@@ -1,6 +1,7 @@
 import pytest
 
 
+@pytest.mark.public_api
 class TestApi(object):
 
     def test_get_facts_ok_and_schema(self):
