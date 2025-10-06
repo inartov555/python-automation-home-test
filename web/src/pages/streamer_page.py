@@ -4,8 +4,10 @@ from .base_page import BasePage
 from tools.logger.logger import Logger
 
 
+log = Logger(__name__)
+
+
 class StreamerPage(BasePage):
-    log = Logger(__name__)
     # Possible popups (consent, mature content, cookie, login prompts, etc.)
     DISMISS_SELECTORS = [
         (By.CSS_SELECTOR, "button[aria-label='Close'], button[aria-label='Dismiss']"),

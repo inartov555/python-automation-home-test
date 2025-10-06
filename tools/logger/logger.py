@@ -22,8 +22,8 @@ class Logger:
             logger_name (str): altough any name can be used, it's recommended to use __name__ python variable
         """
         # creating logger
-        if not logger_name.startswith("python-automation-home-test"):
-            logger_name = f"python-automation-home-test.{logger_name}"
+        if not logger_name.startswith("test"):
+            logger_name = f"test.{logger_name}"
         self.__logger = logging.getLogger(logger_name)
         if self.__logger not in Logger.__loggers:
             Logger.__loggers.append(self.__logger)

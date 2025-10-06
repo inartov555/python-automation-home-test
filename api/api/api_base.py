@@ -7,6 +7,9 @@ from requests import Response
 from tools.logger.logger import Logger
 
 
+log = Logger(__name__)
+
+
 class ApiError(Exception):
     def __init__(self, error_msg):
         msg = "Failed to make request: {}".format(error_msg)
@@ -19,7 +22,6 @@ class ApiBase:
 
     def __init__(self, protocol, host, port):
         self._unique_request_id_increment = 0
-        self.log = Logger(__name__)
         self.protocol = protocol
         self.host = host
         self.port = port
@@ -96,7 +98,7 @@ class ApiBase:
                 url, method, pformat(self.headers), query_params, payload)
             message += "\nError: {}".format(ex)
             message += "\n{}".format(self.END_REQ)
-            self.log.error(message)
+            log.error(message)
             raise ApiError(message)
         if method in methods_config.keys():
             message = "\n{}".format(self.BEGIN_REQ)
@@ -108,14 +110,14 @@ class ApiBase:
                 message += "\nResponse headers: {}".format(resp.headers)
                 message += "\nResponse status code: {}".format(resp.status_code)
                 message += "\n{}".format(self.END_REQ)
-                self.log.debug(message)
+                log.debug(message)
             except Exception as ex:
                 message += "\nResponse URL: {}".format(resp.url)
                 message += "\nResponse text: {}".format(resp.text)
                 message += "\nResponse headers: {}".format(resp.headers)
                 message += "\nResponse status code: {}".format(resp.status_code)
                 message += "\n{}".format(self.END_REQ)
-                self.log.error(message)
+                log.error(message)
                 raise ApiError(message)
             client.close()
         else:
@@ -127,7 +129,7 @@ class ApiJsonRequest(ApiBase):
 
     def __init__(self, protocol, host, port):
         super(ApiJsonRequest, self).__init__(protocol, host, port)
-        self.log = Logger(__name__)
+        log = Logger(__name__)
         headers = {"Content-Type": "application/json",
                    "Accept": "application/json"}
         self.append_headers(headers)

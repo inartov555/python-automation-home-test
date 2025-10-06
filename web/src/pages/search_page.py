@@ -5,8 +5,10 @@ from .base_page import BasePage
 from tools.logger.logger import Logger
 
 
+log = Logger(__name__)
+
+
 class SearchPage(BasePage):
-    log = Logger(__name__)
     SEARCH_INPUT = (By.CSS_SELECTOR, "input[type='search'], input[aria-label='Search']")
     FIRST_RESULT = (
         By.XPATH,

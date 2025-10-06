@@ -4,9 +4,12 @@ import time
 from tools.logger.logger import Logger
 from web.conftest import timestamped_path
 
+
+log = Logger(__name__)
+
+
 @pytest.mark.mobile
 class TestTwitchMobile(object):
-    log = Logger(__name__)
 
     def test_search_and_open_streamer(self, base_url):
         # 1. Open home

@@ -8,8 +8,10 @@ from selenium.webdriver.common.by import By
 from tools.logger.logger import Logger
 
 
+log = Logger(__name__)
+
+
 class BasePage:
-    log = Logger(__name__)
 
     def __init__(self, driver, timeout=10):
         self.driver = driver
@@ -19,7 +21,7 @@ class BasePage:
         Args:
             timeout (int/float): time in seconds to wait
         """
-        self.log.info("{}; timeout: {}".format(reason, timeout))
+        log.info("{}; timeout: {}".format(reason, timeout))
         time.sleep(timeout)
 
     def web_driver_wait(self, timeout=5):
@@ -102,7 +104,7 @@ class BasePage:
             self.driver.execute_script("arguments[0].focus();", web_element)
             return web_element
         except Exception as ex:
-            self.log.error("Failed to focus visible element: {}".format(ex))
+            log.error("Failed to focus visible element: {}".format(ex))
 
     def find_first_visible_in_viewport(self, locator, min_ratio=0.5, top_margin=90, bottom_margin=0):
         """
