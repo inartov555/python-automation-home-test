@@ -9,7 +9,6 @@ from src.pages.home_page import HomePage
 from src.pages.search_page import SearchPage
 from src.pages.streamer_page import StreamerPage
 from tools.logger.logger import Logger
-from api.api.public_api import PublicApi
 
 
 log = Logger(__name__)
@@ -24,7 +23,6 @@ def pytest_addoption(parser):
 
 @pytest.fixture(autouse=True, scope="class")
 def setup_for_testing(request, driver):
-    request.cls.public_api = PublicApi()
     request.cls.driver = driver
     request.cls.home_page = HomePage(driver)
     request.cls.search_page = SearchPage(driver)
