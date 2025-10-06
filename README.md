@@ -1,7 +1,7 @@
-# Note:
+## Note:
 !!! This is just an example of the code, this framework cannot be used for testing Twitch or running multiple times !!!
 
-# ▶️ How to run
+## ▶️ How to run
 NOTE: when you start the source run_tests.sh script, it copies the project to other directory to avoid adding cached files,
  and venv directory to the project folder
 
@@ -13,7 +13,7 @@ To start tests, you need:
 
 ---
 
-# Web Tests – Twitch Mobile (Selenium + Pytest)
+## Web Tests – Twitch Mobile (Selenium + Pytest)
 
 This project implements an example, scalable Selenium test (with Page Object Model) for the mobile Twitch site using Chrome mobile emulation.
 
@@ -47,7 +47,7 @@ Useful options:
 
 ---
 
-# API Tests – Cat Facts (Pytest + Requests)
+## API Tests – Cat Facts (Pytest + Requests)
 
 This project contains example automated API tests using the public, no‑auth **Cat Facts API** (`https://catfact.ninja`). It demonstrates parametrization, schema checks, and negative testing.
 
