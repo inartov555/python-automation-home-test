@@ -24,11 +24,7 @@ elif [[ ! -d "$2" ]]; then
   echo "ERROR: Provided path $2 for the repo does not exist"
   return 1
 else
-  if [[ "${2: -1}" == "/" ]]; then
-    REPO="$2"
-  else
-    REPO="$2"
-  fi
+  REPO="$2"
   echo "Using '$REPO' path for the repo"
 fi
 
