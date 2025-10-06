@@ -17,7 +17,9 @@ class TestTwitchMobile(object):
         # 2. Tap search icon
         self.home_page.open_search()
         # 3. Type query
+        print("\n\n\n BEFORE \n\n\n\n")
         self.search_page.search("StarCraft II")
+        print("\n\n\n AFTER \n\n\n\n")
         # 4. Scroll down twice (small delays to simulate user)
         self.search_page.scroll_by_xy_repeat(times=2)
         # 5. Open a streamer

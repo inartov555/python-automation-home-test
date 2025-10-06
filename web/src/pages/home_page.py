@@ -11,7 +11,7 @@ class HomePage(BasePage):
     # SEARCH_ICON = (By.CSS_SELECTOR, "button[aria-label='Search'] , a[aria-label='Search'] , a[href*='search']")
     SEARCH_ICON = (By.XPATH, "//a[@href='/directory']/div/div")
     # Accept cookies overlay
-    ACCEPT_BUTTON = (By.CSS_SELECTOR, "button[data-a-target='consent-banner-accept']")
+    ACCEPT_BUTTON = (By.XPATH, "//button[@data-a-target='consent-banner-accept']")
     # Sometimes, transition to app overlay is shown when selecting, e.g., the search button,
     # this overlay consists of 2 parts
     TRANSITION_TO_APP_OVERLAY = (By.XPATH,
@@ -22,10 +22,11 @@ class HomePage(BasePage):
 
     def open(self, base_url):
         self.driver.get(base_url + "/")
+        # self.confirm_cookies_overlay_if_shown()  # sometimes, accept cookies overlay is shown at this point
 
     def open_search(self):
         self.click(self.SEARCH_ICON)
-        self.get_out_of_transition_to_app_overlay()
+        self.get_out_of_transition_to_app_overlay()  # sometimes, app transition overlay is shown at this point
 
     def confirm_cookies_overlay_if_shown(self):
         """
@@ -37,7 +38,7 @@ class HomePage(BasePage):
         except Exception:
             # This method is not supposed to check if accept cookies overlay should be shown,
             # so we're ok if it's not shown
-            pass
+            raise
 
     def get_out_of_transition_to_app_overlay(self):
         """
