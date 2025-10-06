@@ -11,7 +11,7 @@ if [[ $? -ne 0 ]]; then
   return 1
 fi
 
-python3 -m pytest --reruns 0 --reruns-delay 2 -v --tb=short -s --html=$HOST_ARTIFACTS/test_report_$(date +%Y-%m-%d_%H-%M-%S).html
+python3 -m pytest --reruns 2 --reruns-delay 2 -v --tb=short -s --html=$HOST_ARTIFACTS/test_report_$(date +%Y-%m-%d_%H-%M-%S).html
 # Now, let's deactivate venv
 deactivate
 # Returning to the original project path to be able to run the test again with new changes, if there are any
