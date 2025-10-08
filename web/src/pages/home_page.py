@@ -23,7 +23,10 @@ class HomePage(BasePage):
         "//div[@class='ScReactModalBase-sc-26ijes-0 foAhuv tw-modal-layer']//button[@class='InjectLayout-sc-1i43xsx-0 ccdBQN']"
     )
 
-    def open(self, base_url):
+    def open(self, base_url: str):
+        """
+        Opening URL
+        """
         self.driver.get(base_url + "/")
         # self.confirm_cookies_overlay_if_shown()  # sometimes, accept cookies overlay is shown at this point
 

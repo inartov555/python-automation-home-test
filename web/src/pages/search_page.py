@@ -19,11 +19,16 @@ class SearchPage(BasePage):
         "//section//button[@class='ScCoreLink-sc-16kq0mq-0 cZfgmJ InjectLayout-sc-1i43xsx-0 ggvZjN tw-link']")
 
     def search(self, query):
+        """
+        Typing search text, starting search and the unfocusing active element
+        """
         self.type(self.SEARCH_INPUT, query + Keys.ENTER)
         self.blur_active_element()
 
     def open_first_streamer(self):
-        # Heuristic: click the first visible result anchor
+        """
+        Heuristic: click the first visible result anchor
+        """
         self.wait_visible(self.FIRST_RESULT)
         el = self.focus_first_visible(self.FIRST_RESULT)
         el.click()

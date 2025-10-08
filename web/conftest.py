@@ -10,33 +10,13 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from tools.logger.logger import Logger
+from conftest import add_loggers, timestamped_path, screenshot_dir
 from web.src.pages.home_page import HomePage
 from web.src.pages.search_page import SearchPage
 from web.src.pages.streamer_page import StreamerPage
 
 
 log = Logger(__name__)
-
-
-@pytest.fixture(autouse=True, scope="session")
-def add_loggers(request):
-    """
-    The fixture to configure loggers
-    It uses built-in pytest arguments to configure loggigng level and files
-
-    Parameters:
-        log_level or --log-level general log level for capturing
-        log_file_level or --log-file-level  level of log to be stored to a file. Usually lower than general log
-        log_file or --log-file  path where logs will be saved
-    """
-    artifacts_folder_default = os.getenv("HOST_ARTIFACTS")
-    log_level = "DEBUG"
-    log_file_level = "DEBUG"
-    log_file = os.path.join(timestamped_path("pytest", "log", artifacts_folder_default))
-    log.setup_cli_handler(level=log_level)
-    log.setup_filehandler(level=log_file_level, file_name=log_file)
-    log.info(f"General loglevel: '{log_level}', File: '{log_file_level}'")
-    log.info(f"Test's logs will be stored: '{log_file}'")
 
 
 def pytest_addoption(parser):
@@ -62,14 +42,6 @@ def setup_for_testing(request, driver):
 @pytest.fixture(scope="session")
 def base_url(pytestconfig):
     return pytestconfig.getoption("--base-url").rstrip("/")
-
-
-@pytest.fixture(scope="session")
-def screenshot_dir(pytestconfig):
-    # path_from_input_params = pytestconfig.getoption("--screenshot-dir")
-    artifacts_folder_default = os.getenv("HOST_ARTIFACTS")
-    os.makedirs(artifacts_folder_default, exist_ok=True)
-    return artifacts_folder_default
 
 
 def get_mobile_emulation(version):
@@ -115,17 +87,3 @@ def driver(pytestconfig):
     driver.set_page_load_timeout(60)
     yield driver
     driver.quit()
-
-
-def timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
-    """
-    Args:
-        file_name (str): e.g. screenshot
-        file_ext (str): file extention, e.g., png
-        path_to_file (str): e.g. /home/user/test_dir/artifacts/
-
-    Returns:
-        str, timestamped path
-    """
-    ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S.%f")
-    return os.path.join(path_to_file, f"{file_name}-{ts}.{file_ext}")

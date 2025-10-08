@@ -1,3 +1,7 @@
+"""
+This file contains API base classes to be derived later
+"""
+
 import json
 import time
 from pprint import pformat
@@ -124,7 +128,7 @@ class ApiBase:
             message += f"\nError: {ex}"
             message += f"\n{self.END_REQ}"
             log.error(message)
-            raise ApiError(message)
+            raise ApiError(message) from ex
         if method in methods_config.keys():
             message = f"\n{self.BEGIN_REQ}"
             message += f"\nRequest config: {methods_config[method]}"
@@ -143,7 +147,7 @@ class ApiBase:
                 message += f"\nResponse status code: {resp.status_code}"
                 message += f"\n{self.END_REQ}"
                 log.error(message)
-                raise ApiError(message)
+                raise ApiError(message) from ex
             client.close()
         else:
             raise ApiError(f"HTTP method is not implemented: {method}\n")

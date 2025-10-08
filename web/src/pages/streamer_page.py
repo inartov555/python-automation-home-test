@@ -23,6 +23,9 @@ class StreamerPage(BasePage):
     CHANNEL_HEADER = (By.CSS_SELECTOR, "header, h1, h2")
 
     def ensure_loaded(self):
+        """
+        Make sure the video/player is visible
+        """
         # Try to close any modal/popups if they appear
         for loc in self.DISMISS_SELECTORS:
             self.maybe_click(loc)
