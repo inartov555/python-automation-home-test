@@ -58,8 +58,3 @@ jobs:
           else
             echo "No test files found."
           fi
-
-      - name: Run pytest (root conftest.py is picked up)
-        run: |
-          # call out paths explicitly; PYTEST_ADDOPTS sets --rootdir to repo root
-          pytest api/tests web/tests
