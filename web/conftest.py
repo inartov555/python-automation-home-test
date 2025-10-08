@@ -19,6 +19,41 @@ from web.src.pages.streamer_page import StreamerPage
 log = Logger(__name__)
 
 
+@pytest.fixture(autouse=True, scope="session")
+def add_loggers_to_tests(request) -> None:
+    """
+    The fixture to configure loggers
+    It uses built-in pytest arguments to configure loggigng level and files
+
+    Parameters:
+        log_level or --log-level general log level for capturing
+        log_file_level or --log-file-level  level of log to be stored to a file. Usually lower than general log
+        log_file or --log-file  path where logs will be saved
+    """
+    add_loggers(request)
+
+
+@pytest.fixture(scope="session")
+def get_timestamped_path(pytestconfig) -> str:
+    """
+    Getting screenshot directory
+    """
+    return screenshot_dir(pytestconfig)
+
+
+def timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
+    """
+    Args:
+        file_name (str): e.g. screenshot
+        file_ext (str): file extention, e.g., png
+        path_to_file (str): e.g. /home/user/test_dir/artifacts/
+
+    Returns:
+        str, timestamped path
+    """
+    return timestamped_path(file_name, file_ext, path_to_file)
+
+
 def pytest_addoption(parser):
     """
     Supported options
@@ -27,6 +62,31 @@ def pytest_addoption(parser):
     parser.addoption("--device", action="store", default="Pixel 5", help="Chrome mobile emulation device name")
     parser.addoption("--headless", action="store", default="false", help="Run headless Chrome (true/false)")
     parser.addoption("--window-size", action="store", default="300,1000", help="Web browser window size")
+
+
+@pytest.fixture(scope="session")
+def driver(pytestconfig):
+    """
+    Browser driver
+    """
+    device = pytestconfig.getoption("--device")
+    window_size = pytestconfig.getoption("--window-size", "300,1000")
+    headless = pytestconfig.getoption("--headless").lower() == "true"
+
+    options = Options()
+    mobile_emulation = get_mobile_emulation(device)
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
+    if headless:
+        options.add_argument("--headless=new")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--window-size={}".format(window_size))
+
+    driver = webdriver.Chrome(options=options)
+    driver.set_page_load_timeout(60)
+    yield driver
+    driver.quit()
 
 
 @pytest.fixture(autouse=True, scope="class")
@@ -74,28 +134,3 @@ def get_mobile_emulation(version):
         )
     }
     return mobile_emulation
-
-
-@pytest.fixture(scope="session")
-def driver(pytestconfig):
-    """
-    Browser driver
-    """
-    device = pytestconfig.getoption("--device")
-    window_size = pytestconfig.getoption("--window-size", "300,1000")
-    headless = pytestconfig.getoption("--headless").lower() == "true"
-
-    options = Options()
-    mobile_emulation = get_mobile_emulation(device)
-    options.add_experimental_option("mobileEmulation", mobile_emulation)
-    if headless:
-        options.add_argument("--headless=new")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size={}".format(window_size))
-
-    driver = webdriver.Chrome(options=options)
-    driver.set_page_load_timeout(60)
-    yield driver
-    driver.quit()

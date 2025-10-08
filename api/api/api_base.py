@@ -132,7 +132,7 @@ class ApiBase:
             message += f"\n{self.END_REQ}"
             log.error(message)
             raise ApiError(message) from ex
-        if method in methods_config.keys():
+        if method in methods_config:
             message = f"\n{self.BEGIN_REQ}"
             message += f"\nRequest config: {methods_config[method]}"
             try:

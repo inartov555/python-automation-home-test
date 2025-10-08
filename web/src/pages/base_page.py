@@ -20,7 +20,7 @@ class BasePage:
     Base methods for derived pages
     """
 
-    def __init__(self, driver, timeout: int = 10):
+    def __init__(self, driver):
         self.driver = driver
 
     def pause(self, timeout: int = 3, reason: str = "Waiting a bit"):
@@ -116,6 +116,9 @@ class BasePage:
         self.blur_active_element()
 
     def scroll_into_center(self, locator) -> None:
+        """
+        Scroll into center
+        """
         web_element = self.driver.find_element(*locator)
         self.driver.execute_script("arguments[0].scrollIntoView({block:'center', inline:'center'});", web_element)
 
@@ -150,6 +153,7 @@ class BasePage:
             return web_element
         except Exception as ex:
             log.error(f"Failed to focus visible element: {ex}")
+        return None
 
     def find_first_visible_in_viewport(self,
                                        locator,
@@ -190,7 +194,6 @@ class BasePage:
             return els.find(visible) || null;
             """
             return self.driver.execute_script(js, value, float(min_ratio), int(top_margin), int(bottom_margin))
-
         elif by == By.XPATH:
             js = """
             const xpath = arguments[0], ratio = arguments[1], topM = arguments[2], bottomM = arguments[3];
@@ -219,6 +222,5 @@ class BasePage:
             return els.find(visible) || null;
             """
             return self.driver.execute_script(js, value, float(min_ratio), int(top_margin), int(bottom_margin))
-
         else:
             raise ValueError("Use CSS_SELECTOR or XPATH for this helper.")

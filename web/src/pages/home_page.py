@@ -35,6 +35,9 @@ class HomePage(BasePage):
         # self.confirm_cookies_overlay_if_shown()  # sometimes, accept cookies overlay is shown at this point
 
     def open_search(self):
+        """
+        Open search page
+        """
         self.click(self.SEARCH_ICON)
         self.get_out_of_transition_to_app_overlay()  # sometimes, app transition overlay is shown at this point
 
