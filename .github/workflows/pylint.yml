@@ -24,3 +24,4 @@ jobs:
       run: |
         export PYTHONPATH="${PYTHONPATH}:$(pwd)"
         pylint --max-line-length=128 $(git ls-files '*.py')
+        pylint --disable=too-few-public-methods web/tests
