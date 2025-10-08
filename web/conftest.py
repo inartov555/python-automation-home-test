@@ -100,6 +100,7 @@ def driver(pytestconfig):
     _driver.quit()
 
 
+# pylint: disable=redefined-outer-name
 @pytest.fixture(autouse=True, scope="function")
 def setup_for_testing(request, driver):
     """
