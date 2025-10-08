@@ -12,12 +12,19 @@ log = Logger(__name__)
 
 
 class ApiError(Exception):
-    def __init__(self, error_msg):
+    def __init__(self, error_msg: str):
+        """
+        Args:
+            error_msg (str): error message
+        """
         msg = f"Failed to make request: {error_msg}"
         super().__init__(msg)
 
 
 class ApiBase:
+    """
+    Method for the derived classes
+    """
     BEGIN_REQ = "========== BEGIN =========="
     END_REQ = "========== END =========="
 
@@ -144,6 +151,9 @@ class ApiBase:
 
 
 class ApiJsonRequest(ApiBase):
+    """
+    API methods for the service that returs data in JSON format
+    """
 
     def __init__(self, protocol: str, host: str, port: int):
         """

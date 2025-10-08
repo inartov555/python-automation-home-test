@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 from tools.logger.logger import Logger
-from web.src.base_page import BasePage
+from web.src.pages.base_page import BasePage
 
 
 log = Logger(__name__)
@@ -41,7 +41,7 @@ class HomePage(BasePage):
         except Exception:
             # This method is not supposed to check if accept cookies overlay should be shown,
             # so we're ok if it's not shown
-            raise
+            pass
 
     def get_out_of_transition_to_app_overlay(self):
         """

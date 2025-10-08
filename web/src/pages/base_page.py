@@ -24,7 +24,7 @@ class BasePage:
         Args:
             timeout (int/float): time in seconds to wait
         """
-        log.info(f"{reason}; timeout: {timeout}"
+        log.info(f"{reason}; timeout: {timeout}")
         time.sleep(timeout)
 
     def web_driver_wait(self, timeout: int = 5):
@@ -84,6 +84,9 @@ class BasePage:
         self.driver.execute_script("arguments[0].scrollIntoView({block:'center', inline:'center'});", web_element)
 
     def maybe_click(self, locator) -> None:
+        """
+        Tries to click, no effect if element is not clickable
+        """
         try:
             self.click(locator)
             return True
@@ -91,6 +94,9 @@ class BasePage:
             return False
 
     def tap_empty_space(self) -> None:
+        """
+        Tapping empty space
+        """
         try:
             self.action_chains().move_by_offset(1, 1).click().perform()
         except Exception:
