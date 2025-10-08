@@ -8,6 +8,9 @@ log = Logger(__name__)
 
 
 class StreamerPage(BasePage):
+    """
+    Streamer page
+    """
     # Possible popups (consent, mature content, cookie, login prompts, etc.)
     DISMISS_SELECTORS = [
         (By.CSS_SELECTOR, "button[aria-label='Close'], button[aria-label='Dismiss']"),

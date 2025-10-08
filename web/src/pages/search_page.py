@@ -9,6 +9,9 @@ log = Logger(__name__)
 
 
 class SearchPage(BasePage):
+    """
+    Search page
+    """
     SEARCH_INPUT = (By.CSS_SELECTOR, "input[type='search'], input[aria-label='Search']")
     FIRST_RESULT = (
         By.XPATH,

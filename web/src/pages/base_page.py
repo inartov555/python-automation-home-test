@@ -12,25 +12,28 @@ log = Logger(__name__)
 
 
 class BasePage:
+    """
+    Base methods for derived pages
+    """
 
-    def __init__(self, driver, timeout=10):
+    def __init__(self, driver, timeout: int = 10):
         self.driver = driver
 
-    def pause(self, timeout=3, reason="Waiting a bit"):
+    def pause(self, timeout: int = 3, reason: str = "Waiting a bit"):
         """
         Args:
             timeout (int/float): time in seconds to wait
         """
-        log.info("{}; timeout: {}".format(reason, timeout))
+        log.info(f"{reason}; timeout: {timeout}"
         time.sleep(timeout)
 
-    def web_driver_wait(self, timeout=5):
+    def web_driver_wait(self, timeout: int = 5):
         return WebDriverWait(self.driver, timeout)
 
     def action_chains(self):
         return ActionChains(self.driver)
 
-    def click_and_drag(self, locator, move_by_x=0, move_by_y=300):
+    def click_and_drag(self, locator, move_by_x: in = 0, move_by_y: int = 300):
         web_element = self.driver.find_element(*locator)
         self.action_chains().click_and_hold(web_element).move_by_offset(move_by_x, move_by_y).release().perform()
 
@@ -45,29 +48,29 @@ class BasePage:
             result = False
         return result
 
-    def wait_visible(self, locator, timeout=5):
+    def wait_visible(self, locator, timeout: int = 5) -> bool:
         return self.web_driver_wait(timeout).until(EC.visibility_of_element_located(locator))
 
-    def wait_clickable(self, locator, timeout=5):
+    def wait_clickable(self, locator, timeout: int = 5) -> bool:
         return self.web_driver_wait(timeout).until(EC.element_to_be_clickable(locator))
 
-    def click(self, locator):
+    def click(self, locator) -> None:
         self.wait_clickable(locator).click()
 
-    def js_click(self, locator):
+    def js_click(self, locator) -> None:
         # JavaScript click
         web_element = self.driver.find_element(*locator)
         self.driver.execute_script("arguments[0].click();", web_element)
 
-    def type(self, locator, text):
+    def type(self, locator, text: str) -> None:
         el = self.wait_visible(locator)
         el.clear()
         el.send_keys(text)
 
-    def scroll_by(self, x=0, y=700):
+    def scroll_by(self, x: int = 0, y: int = 700) -> None:
         self.driver.execute_script("window.scrollBy(arguments[0], arguments[1]);", x, y)
 
-    def scroll_by_xy_repeat(self, x=0, y=700, times=1):
+    def scroll_by_xy_repeat(self, x=0, y=700, times=1) -> None:
         """
         When you need to scroll particular number of times
         """
@@ -76,18 +79,18 @@ class BasePage:
             self.pause(1)
         self.blur_active_element()
 
-    def scroll_into_center(self, locator):
+    def scroll_into_center(self, locator) -> None:
         web_element = self.driver.find_element(*locator)
         self.driver.execute_script("arguments[0].scrollIntoView({block:'center', inline:'center'});", web_element)
 
-    def maybe_click(self, locator):
+    def maybe_click(self, locator) -> None:
         try:
             self.click(locator)
             return True
         except Exception:
             return False
 
-    def tap_empty_space(self):
+    def tap_empty_space(self) -> None:
         try:
             self.action_chains().move_by_offset(1, 1).click().perform()
         except Exception:
@@ -104,9 +107,13 @@ class BasePage:
             self.driver.execute_script("arguments[0].focus();", web_element)
             return web_element
         except Exception as ex:
-            log.error("Failed to focus visible element: {}".format(ex))
+            log.error(f"Failed to focus visible element: {ex}")
 
-    def find_first_visible_in_viewport(self, locator, min_ratio=0.5, top_margin=90, bottom_margin=0):
+    def find_first_visible_in_viewport(self,
+                                       locator,
+                                       min_ratio: float = 0.5,
+                                       top_margin: int = 90,
+                                       bottom_margin: int = 0):
         """
         Get the 1st visible element which is visible at list by min_ratio in view port and not covered by other elements.
 

@@ -12,7 +12,7 @@ log = Logger(__name__)
 
 class ApiError(Exception):
     def __init__(self, error_msg):
-        msg = "Failed to make request: {}".format(error_msg)
+        msg = f"Failed to make request: {error_msg}"
         super().__init__(msg)
 
 
@@ -20,7 +20,13 @@ class ApiBase:
     BEGIN_REQ = "========== BEGIN =========="
     END_REQ = "========== END =========="
 
-    def __init__(self, protocol, host, port):
+    def __init__(self, protocol: str, host: str, port: int):
+        """
+        Args:
+            protocol (str): http or https
+            host (str): e.g. google.com
+            port (dict): e.g. 443
+        """
         self._unique_request_id_increment = 0
         self.protocol = protocol
         self.host = host
@@ -28,14 +34,19 @@ class ApiBase:
         self.headers = {"User-Agent": "python-automation-home-test",
                         "Unique-RequestId": str(self._unique_request_id_increment) + "_" + hex(int(time.time()))}
 
-    def append_headers(self, new_headers):
+    def append_headers(self, new_headers: dict):
         """
         Args:
             new_headers (dict): new headers to append
         """
         self.headers.update(new_headers)
 
-    def make_request(self, method, uri, payload={}, query_params={}, headers={}):
+    def make_request(self,
+                     method: str,
+                     uri: str,
+                     payload: dict = None,
+                     query_params: dict = None,
+                     headers: dict = None):
         """
         Getting the Response object.
         Log lines are consolidated into single variable to support concurrent requests, if any are added.
@@ -50,6 +61,12 @@ class ApiBase:
         Returns:
             Response
         """
+        if not payload:
+            payload = {}
+        if not query_params:
+            query_params = {}
+        if not headers:
+            headers = {}
         client = requests.session()
         url = '%s://%s:%s%s' % (self.protocol, self.host, self.port, uri)
         if headers:
@@ -93,41 +110,47 @@ class ApiBase:
                                       },
                               }
         except Exception as ex:
-            message = "\n{}".format(self.BEGIN_REQ)
-            message += "\nURL: {} \nMethod: {} \nheaders: {} \nparams: {} \npayload: {}".format(
-                url, method, pformat(self.headers), query_params, payload)
-            message += "\nError: {}".format(ex)
-            message += "\n{}".format(self.END_REQ)
+            message = f"\n{self.BEGIN_REQ}"
+            message += f"\nURL: {url} \nMethod: {method} \nheaders: {pformat(self.headers)} " \
+                f"\nparams: {query_params} \npayload: {payload}"
+            message += f"\nError: {ex}"
+            message += f"\n{self.END_REQ}"
             log.error(message)
             raise ApiError(message)
         if method in methods_config.keys():
-            message = "\n{}".format(self.BEGIN_REQ)
-            message += "\nRequest config: {}".format(methods_config[method])
+            message = f"\n{self.BEGIN_REQ}"
+            message += f"\nRequest config: {methods_config[method]}"
             try:
                 resp = client.request(**methods_config[method])
-                message += "\nResponse URL: {}".format(resp.url)
-                message += "\nResponse text: {}".format(resp.text)
-                message += "\nResponse headers: {}".format(resp.headers)
-                message += "\nResponse status code: {}".format(resp.status_code)
-                message += "\n{}".format(self.END_REQ)
+                message += f"\nResponse URL: {resp.url}"
+                message += f"\nResponse text: {resp.text}"
+                message += f"\nResponse headers: {resp.headers}"
+                message += f"\nResponse status code: {resp.status_code}"
+                message += f"\n{self.END_REQ}"
                 log.debug(message)
             except Exception as ex:
-                message += "\nResponse URL: {}".format(resp.url)
-                message += "\nResponse text: {}".format(resp.text)
-                message += "\nResponse headers: {}".format(resp.headers)
-                message += "\nResponse status code: {}".format(resp.status_code)
-                message += "\n{}".format(self.END_REQ)
+                message += f"\nResponse URL: {resp.url}"
+                message += f"\nResponse text: {resp.text}"
+                message += f"\nResponse headers: {resp.headers}"
+                message += f"\nResponse status code: {resp.status_code}"
+                message += f"\n{self.END_REQ}"
                 log.error(message)
                 raise ApiError(message)
             client.close()
         else:
-            raise ApiError("HTTP method is not implemented: {}\n".format(method))
+            raise ApiError(f"HTTP method is not implemented: {method}\n")
         return resp
 
 
 class ApiJsonRequest(ApiBase):
 
-    def __init__(self, protocol, host, port):
+    def __init__(self, protocol: str, host: str, port: int):
+        """
+        Args:
+            protocol (str): http or https
+            host (str): e.g. google.com
+            port (dict): e.g. 443
+        """
         super(ApiJsonRequest, self).__init__(protocol, host, port)
         log = Logger(__name__)
         headers = {"Content-Type": "application/json",

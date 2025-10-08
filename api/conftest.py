@@ -7,6 +7,11 @@ from api.api.public_api import PublicApi
 from tools.logger.logger import Logger
 
 
+"""
+conftest.py file
+"""
+
+
 log = Logger(__name__)
 
 
@@ -27,8 +32,8 @@ def add_loggers(request):
     log_file = os.path.join(timestamped_path("pytest", "log", artifacts_folder_default))
     log.setup_cli_handler(level=log_level)
     log.setup_filehandler(level=log_file_level, file_name=log_file)
-    log.info("General loglevel: '{}', File: '{}'".format(log_level, log_file_level))
-    log.info("Test's logs will be stored: '{}'".format(log_file))
+    log.info(f"General loglevel: '{log_level}', File: '{log_file_level}'"
+    log.info(f"Test's logs will be stored: '{log_file}'"
 
 
 def pytest_addoption(parser):
@@ -45,12 +50,15 @@ def setup_api_testing(request):
     request.cls.public_api = PublicApi()
 
 
-def timestamped_path(file_name, file_ext, path_to_file=os.getenv("HOST_ARTIFACTS")):
+def timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
     """
     Args:
         file_name (str): e.g. screenshot
         file_ext (str): file extention, e.g., png
         path_to_file (str): e.g. /home/user/test_dir/artifacts/
+
+    Returns:
+        str, timestamped path
     """
     ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S.%f")
     return os.path.join(path_to_file, f"{file_name}-{ts}.{file_ext}")

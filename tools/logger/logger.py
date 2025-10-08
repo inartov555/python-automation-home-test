@@ -2,8 +2,6 @@ import logging
 import logging.config
 import os
 import sys
-import string
-import datetime
 
 
 class Logger:
@@ -12,7 +10,7 @@ class Logger:
     __loggers = []  # links to all created loggers
     log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
-    def __init__(self, logger_name):
+    def __init__(self, logger_name: str):
         """
         Wrapper over logging class that initializes a logger with the config in 'tools/logger/logging.json'
         To modify default log level edit in 'tools/logger/logging.json' the parameter json['handlers']['console']['info']
@@ -28,19 +26,28 @@ class Logger:
         if self.__logger not in Logger.__loggers:
             Logger.__loggers.append(self.__logger)
 
-    def step(self, message):
-        self.__logger.step(message)
-
-    def info(self, message):
+    def info(self, message: str):
+        """
+        INFO log line
+        """
         self.__logger.info(message)
 
-    def debug(self, message):
+    def debug(self, message: str):
+        """
+        DEBUG log line
+        """
         self.__logger.debug(message)
 
-    def error(self, message):
+    def error(self, message: str):
+        """
+        ERROR log line
+        """
         self.__logger.error(message)
 
-    def warning(self, message):
+    def warning(self, message: str):
+        """
+        WARNING log line
+        """
         self.__logger.warning(message)
 
     def __update_handler(self, logr, handlr):
@@ -59,7 +66,7 @@ class Logger:
         else:
             logr.addHandler(handlr)
 
-    def __get_file_handler(self, level, file_name):
+    def __get_file_handler(self, level: str, file_name: str):
         """
         Method to create file handler or get it from a cash
 
@@ -79,7 +86,7 @@ class Logger:
             Logger.__file_handler = file_handler
         return Logger.__file_handler
 
-    def __get_cli_handler(self, level):
+    def __get_cli_handler(self, level: str):
         """
         Method to create Stream handler or get it froma cash
 
@@ -98,7 +105,7 @@ class Logger:
             Logger.__cli_handler = cli_handler
         return Logger.__cli_handler
 
-    def setup_cli_handler(self, level):
+    def setup_cli_handler(self, level: str):
         """
         Method to set up CLI handler for particular logger or all available
         If CLI handler was set up for all loggers then all new will be created with the same config
@@ -111,7 +118,7 @@ class Logger:
         self.__update_handler(root_logger, cli_handler)
         root_logger.setLevel(min(cli_handler.level, root_logger.level))
 
-    def setup_filehandler(self, file_name, level="DEBUG"):
+    def setup_filehandler(self, file_name: str, level: str = "DEBUG"):
         """
         Method to setup file handler for particular logger or all available
         If file handler was setup for all loggers then all new will be created with the same config

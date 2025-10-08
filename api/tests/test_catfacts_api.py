@@ -2,7 +2,10 @@ import pytest
 
 
 @pytest.mark.public_api
-class TestApi(object):
+class TestApi:
+    """
+    API tests
+    """
 
     def test_get_facts_ok_and_schema(self):
         resp = self.public_api.make_request("get", "/facts", is_return_resp_obj=True)

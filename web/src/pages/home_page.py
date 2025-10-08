@@ -8,6 +8,9 @@ log = Logger(__name__)
 
 
 class HomePage(BasePage):
+    """
+    Home page
+    """
     # SEARCH_ICON = (By.CSS_SELECTOR, "button[aria-label='Search'] , a[aria-label='Search'] , a[href*='search']")
     SEARCH_ICON = (By.XPATH, "//a[@href='/directory']/div/div")
     # Accept cookies overlay
