@@ -27,7 +27,7 @@ jobs:
         pylint --max-line-length=128 $(git ls-files '*.py')
         pylint --disable=too-few-public-methods web/tests
         pylint --disable=too-many-arguments,too-many-positional-arguments $(git ls-files -- '*.py')
-        TEST_FILES="$(git ls-files -- 'tests/**/*.py' 'api/tests/**/*.py' 'web/tests/**/*.py' || true)"
+        TEST_FILES="$(git ls-files -- 'tests/*.py' 'api/tests/*.py' 'web/tests/*.py' || true)"
         if [ -n "$TEST_FILES" ]; then
           pylint --rcfile=.pylintrc --disable=too-few-public-methods $TEST_FILES
           pylint --disable=no-member $TEST_FILES
