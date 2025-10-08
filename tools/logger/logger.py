@@ -9,6 +9,9 @@ import sys
 
 
 class Logger:
+    """
+    Logger
+    """
     __file_handler = None
     __cli_handler = None
     __loggers = []  # links to all created loggers

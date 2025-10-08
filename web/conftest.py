@@ -3,7 +3,6 @@ conftest.py file
 """
 
 import os
-from datetime import datetime
 
 import pytest
 from selenium import webdriver
@@ -41,7 +40,7 @@ def get_timestamped_path(pytestconfig) -> str:
     return screenshot_dir(pytestconfig)
 
 
-def timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
+def get_timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
     """
     Args:
         file_name (str): e.g. screenshot
@@ -81,12 +80,12 @@ def driver(pytestconfig):
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size={}".format(window_size))
+    options.add_argument(f"--window-size={window_size}")
 
-    driver = webdriver.Chrome(options=options)
-    driver.set_page_load_timeout(60)
-    yield driver
-    driver.quit()
+    _driver = webdriver.Chrome(options=options)
+    _driver.set_page_load_timeout(60)
+    yield _driver
+    _driver.quit()
 
 
 @pytest.fixture(autouse=True, scope="class")

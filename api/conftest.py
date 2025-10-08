@@ -2,6 +2,8 @@
 conftest.py file
 """
 
+import os
+
 import pytest
 
 from conftest import add_loggers, timestamped_path
