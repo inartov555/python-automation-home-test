@@ -7,8 +7,14 @@ import pytest
 
 @pytest.mark.public_api
 class TestApi:
+    """
+    API tests
+    """
 
     def test_get_facts_ok_and_schema(self):
+        """
+        Get /facts, check if status code == 200, then check if 'current_page', 'per_page' are available
+        """
         resp = self.public_api.make_request("get", "/facts", is_return_resp_obj=True)
         assert resp.status_code == 200
         body = resp.json()
@@ -19,6 +25,9 @@ class TestApi:
 
     @pytest.mark.parametrize('page,limit', [(1,5),(2,10),(3,3)])
     def test_pagination(self, page, limit):
+        """
+        Get /facts, check if status code == 200, then check if page changes
+        """
         query_params = {'page': page, 'limit': limit}
         resp = self.public_api.make_request("get", "/facts", query_params=query_params, is_return_resp_obj=True)
         assert resp.status_code == 200
@@ -27,6 +36,9 @@ class TestApi:
         assert len(body.get('data', [])) <= limit
 
     def test_breeds_schema(self):
+        """
+        Get /breads, check if status code == 200, then check if response contains the list
+        """
         resp = self.public_api.make_request("get", "/breeds", is_return_resp_obj=True)
         assert resp.status_code == 200
         body = resp.json()
@@ -37,6 +49,9 @@ class TestApi:
             assert required.issubset(item.keys())
 
     def test_invalid_limit_handled(self):
+        """
+        Get /facts, check if checking invalid limit
+        """
         query_params = {'limit': -1}
         resp = self.public_api.make_request("get", "/facts", query_params=query_params, is_return_resp_obj=True)
         # Some public APIs normalize invalid input; others return 4xx.

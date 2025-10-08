@@ -16,6 +16,9 @@ log = Logger(__name__)
 
 
 class ApiError(Exception):
+    """
+    Class for raising API errors
+    """
     def __init__(self, error_msg: str):
         """
         Args:

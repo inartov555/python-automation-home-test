@@ -1,3 +1,7 @@
+"""
+Base methods for derived pages
+"""
+
 import time
 
 from selenium.webdriver.support.ui import WebDriverWait
@@ -39,7 +43,7 @@ class BasePage:
         """
         return ActionChains(self.driver)
 
-    def click_and_drag(self, locator, move_by_x: in = 0, move_by_y: int = 300):
+    def click_and_drag(self, locator, move_by_x: int = 0, move_by_y: int = 300):
         """
         Clicking and dragging an element
         """

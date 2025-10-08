@@ -1,3 +1,7 @@
+"""
+Home page
+"""
+
 from selenium.webdriver.common.by import By
 
 from tools.logger.logger import Logger

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Input parameters:
-#   - $1: the module name to run tests, currently supported (api, web)
-#   - $2: the path to the project, defaults to $DEFAULT_REPO_PATH
+#   - $1: the path to the project, defaults to $DEFAULT_REPO_PATH
+#   - $2: the module name to run tests, currently supported (api, web)
 # Exported variables: HOST_ARTIFACTS, ROOT_VENV, TEST_VENV, COPIED_PROJECT_PATH
 
-if [ -z $1 ]; then
+if [ -z $2 ]; then
   echo "ERROR: module name must be set to run the tests"
   return 1
 fi
@@ -13,18 +13,18 @@ fi
 DEFAULT_REPO_PATH="$HOME/python-automation-home-test"
 
 # Repo path defaults to $DEFAULT_REPO_PATH
-if [[ -z "$2" ]]; then
+if [[ -z "$1" ]]; then
   echo "WARNING: no path passed for the project, defaulting to $DEFAULT_REPO_PATH"
   REPO="$DEFAULT_REPO_PATH"
   if [[ ! -d "$REPO" ]]; then
     echo "ERROR: Default path $DEFAULT_REPO_PATH for the repo does not exist"
     return 1
   fi
-elif [[ ! -d "$2" ]]; then
-  echo "ERROR: Provided path $2 for the repo does not exist"
+elif [[ ! -d "$1" ]]; then
+  echo "ERROR: Provided path $1 for the repo does not exist"
   return 1
 else
-  REPO="$2"
+  REPO="$1"
   echo "Using '$REPO' path for the repo"
 fi
 
@@ -58,12 +58,12 @@ cd "$COPIED_PROJECT_PATH"
 
 echo "Root env set up to: $(pwd)"
 export ROOT_VENV="$COPIED_PROJECT_PATH"
-echo "Entering the '$COPIED_PROJECT_PATH/$1' module"
-cd "$1"
+echo "Entering the '$COPIED_PROJECT_PATH/$2' module"
+cd "$2"
 
 # Activating venv
 
-MODULE_PATH="$ROOT_VENV/$1"
+MODULE_PATH="$ROOT_VENV/$2"
 cd "$MODULE_PATH"
 
 if python3 -m venv --help > /dev/null 2>&1; then

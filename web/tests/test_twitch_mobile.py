@@ -13,6 +13,9 @@ log = Logger(__name__)
 
 @pytest.mark.mobile
 class TestTwitchMobile:
+    """
+    Twitch mobile tests
+    """
 
     def test_search_and_open_streamer(self, base_url):
         """

@@ -1,3 +1,7 @@
+"""
+API methods
+"""
+
 from tools.logger.logger import Logger
 from api.api.api_base import ApiJsonRequest
 
@@ -6,9 +10,12 @@ log = Logger(__name__)
 
 
 class PublicApi(ApiJsonRequest):
+    """
+    API methods
+    """
 
     def __init__(self):
-        super(PublicApi, self).__init__("https", "catfact.ninja", "443")
+        super().__init__("https", "catfact.ninja", "443")
 
     def get_facts(self, page=None, limit=None):
         """

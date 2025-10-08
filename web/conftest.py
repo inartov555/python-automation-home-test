@@ -9,8 +9,8 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from tools.logger.logger import Logger
 from conftest import add_loggers, timestamped_path, screenshot_dir
+from tools.logger.logger import Logger
 from web.src.pages.home_page import HomePage
 from web.src.pages.search_page import SearchPage
 from web.src.pages.streamer_page import StreamerPage
@@ -20,6 +20,9 @@ log = Logger(__name__)
 
 
 def pytest_addoption(parser):
+    """
+    Supported options
+    """
     parser.addoption("--base-url", action="store", default="https://m.twitch.tv", help="Base URL for the site")
     parser.addoption("--device", action="store", default="Pixel 5", help="Chrome mobile emulation device name")
     parser.addoption("--headless", action="store", default="false", help="Run headless Chrome (true/false)")
@@ -28,6 +31,9 @@ def pytest_addoption(parser):
 
 @pytest.fixture(autouse=True, scope="class")
 def setup_for_testing(request, driver):
+    """
+    Setting up pages for testing
+    """
     request.cls.driver = driver
     request.cls.home_page = HomePage(driver)
     request.cls.search_page = SearchPage(driver)
@@ -40,7 +46,10 @@ def setup_for_testing(request, driver):
 
 
 @pytest.fixture(scope="session")
-def base_url(pytestconfig):
+def base_url(pytestconfig) -> str:
+    """
+    Get base URL from the fixture
+    """
     return pytestconfig.getoption("--base-url").rstrip("/")
 
 
@@ -69,6 +78,9 @@ def get_mobile_emulation(version):
 
 @pytest.fixture(scope="session")
 def driver(pytestconfig):
+    """
+    Browser driver
+    """
     device = pytestconfig.getoption("--device")
     window_size = pytestconfig.getoption("--window-size", "300,1000")
     headless = pytestconfig.getoption("--headless").lower() == "true"

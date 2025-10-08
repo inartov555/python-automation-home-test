@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Input parameters:
-#   - $1: the module name to run tests, currently supported (api, web)
-#   - $2: the path to the project, defaults to $DEFAULT_REPO_PATH
+#   - $1: the path to the project, defaults to $DEFAULT_REPO_PATH
+#   - $2: the module name to run tests, currently supported (api, web)
 # Exported variables in the setup.sh file: HOST_ARTIFACTS, ROOT_VENV, TEST_VENV, COPIED_PROJECT_PATH
 
 ORIGINAL_PROJECT_PATH="$(pwd)"
