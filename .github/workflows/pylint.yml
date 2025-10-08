@@ -22,4 +22,5 @@ jobs:
         if [ -f web/requirements.txt ]; then pip install -r web/requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)"
         pylint --max-line-length=128 $(git ls-files '*.py')
