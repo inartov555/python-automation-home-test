@@ -5,7 +5,7 @@ Twitch mobile tests
 import pytest
 
 from tools.logger.logger import Logger
-from web.conftest import get_timestamped_path
+from web.conftest import timestamped_path
 
 
 log = Logger(__name__)
@@ -34,6 +34,6 @@ class TestTwitchMobile:
         # 6. Wait for streamer page to load; take screenshot
         self.streamer_page.ensure_loaded()
         # 7. Taking a screenshot
-        screenshot_path = get_timestamped_path("streamer", "png")
+        screenshot_path = timestamped_path("streamer", "png")
         self.driver.save_screenshot(screenshot_path)
         log.debug(f"Saved screenshot: {screenshot_path}")

@@ -3,10 +3,10 @@ conftest.py file
 """
 
 import os
+from datetime import datetime
 
 import pytest
 
-from conftest import add_loggers, timestamped_path
 from tools.logger.logger import Logger
 from api.api.public_api import PublicApi
 
@@ -15,7 +15,7 @@ log = Logger(__name__)
 
 
 @pytest.fixture(autouse=True, scope="session")
-def add_loggers_to_tests(request) -> None:
+def add_loggers(request) -> None:
     """
     The fixture to configure loggers
     It uses built-in pytest arguments to configure loggigng level and files
@@ -25,10 +25,17 @@ def add_loggers_to_tests(request) -> None:
         log_file_level or --log-file-level  level of log to be stored to a file. Usually lower than general log
         log_file or --log-file  path where logs will be saved
     """
-    add_loggers(request)
+    artifacts_folder_default = os.getenv("HOST_ARTIFACTS")
+    log_level = "DEBUG"
+    log_file_level = "DEBUG"
+    log_file = os.path.join(timestamped_path("pytest", "log", artifacts_folder_default))
+    log.setup_cli_handler(level=log_level)
+    log.setup_filehandler(level=log_file_level, file_name=log_file)
+    log.info(f"General loglevel: '{log_level}', File: '{log_file_level}'")
+    log.info(f"Test's logs will be stored: '{log_file}'")
 
 
-def get_timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
+def timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.getenv("HOST_ARTIFACTS")) -> str:
     """
     Args:
         file_name (str): e.g. screenshot
@@ -38,7 +45,8 @@ def get_timestamped_path(file_name: str, file_ext: str, path_to_file: str = os.g
     Returns:
         str, timestamped path
     """
-    return timestamped_path(file_name, file_ext, path_to_file)
+    ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S.%f")
+    return os.path.join(path_to_file, f"{file_name}-{ts}.{file_ext}")
 
 
 def pytest_addoption(parser):
