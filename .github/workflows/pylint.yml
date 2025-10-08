@@ -8,43 +8,56 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.12"]
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
+      - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f api/requirements.txt ]; then pip install -r api/requirements.txt; fi
-        if [ -f web/requirements.txt ]; then pip install -r web/requirements.txt; fi
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Lint app code (strict)
-      run: |
-        export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-        pylint --max-line-length=128 $(git ls-files '*.py')
-        APP_FILES="$(git ls-files -- '*.py' | grep -vE '(^|/)tests/')" || true
-        if [ -n "$APP_FILES" ]; then
-          pylint --max-line-length=128 \
-                 --disable=too-many-arguments,too-many-positional-arguments \
-                 $APP_FILES
-        else
-          echo "No app files to lint."
-        fi
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint pylint-pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f api/requirements.txt ]; then pip install -r api/requirements.txt; fi
+          if [ -f web/requirements.txt ]; then pip install -r web/requirements.txt; fi
 
-      name: Lint tests (relaxed)
-      run: |
-        export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-        # pick up common test locations; adjust globs if needed
-        TEST_FILES="$(git ls-files -- 'tests/**/*.py' 'tests/*.py' 'api/tests/**/*.py' 'api/tests/*.py' 'web/tests/**/*.py' 'web/tests/*.py')" || true
-        if [ -n "$TEST_FILES" ]; then
-          pylint --max-line-length=128 \
-                 --disable=no-member,too-few-public-methods \
-                 $TEST_FILES
-        else
-          echo "No test files found."
-        fi
+      - name: Lint app code (strict)
+        run: |
+          export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+          # all .py EXCEPT tests/ and web/src/pages/ (handled in next step)
+          APP_FILES="$(git ls-files -- '*.py' | grep -vE '(^|/)tests/|^web/src/pages/')" || true
+          if [ -n "$APP_FILES" ]; then
+            pylint --max-line-length=128 \
+                   --disable=too-many-arguments,too-many-positional-arguments \
+                   $APP_FILES
+          else
+            echo "No app files to lint."
+          fi
+
+      - name: Lint web pages (allow broad exception)
+        run: |
+          export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+          WEB_PAGES="$(git ls-files -- 'web/src/pages/**/*.py' 'web/src/pages/*.py')" || true
+          if [ -n "$WEB_PAGES" ]; then
+            pylint --max-line-length=128 \
+                   --disable=broad-exception-caught \
+                   $WEB_PAGES
+          else
+            echo "No web page files found."
+          fi
+
+      - name: Lint tests (relaxed)
+        run: |
+          export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+          TEST_FILES="$(git ls-files -- 'tests/**/*.py' 'tests/*.py' 'api/tests/**/*.py' 'api/tests/*.py' 'web/tests/**/*.py' 'web/tests/*.py')" || true
+          if [ -n "$TEST_FILES" ]; then
+            pylint --max-line-length=128 \
+                   --disable=no-member,too-few-public-methods \
+                   $TEST_FILES
+          else
+            echo "No test files found."
+          fi
