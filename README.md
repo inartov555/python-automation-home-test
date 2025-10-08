@@ -7,7 +7,7 @@ NOTE: when you start the source run_tests.sh script, it copies the project to ot
 
 To start tests, you need:
 - Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME PATH_TO_THE_PROJECT```
-  (where `MODULE_NAME` can be one of (api, web,), `PATH_TO_THE_PROJECT` is path to the project)
+  (where `MODULE_NAME` can be one of (api, web,), `PATH_TO_THE_PROJECT` - the path to the project, e.g., `/home/user/python-automation-home-test`)
 - Copied project folder, run results like logs, screenshots, etc., are located in: `/home/$user_name/TEST1/workspace`
 - Artifacts (run results, logs, screenshots, etc.) are located in: `/home/$user_name/TEST1/workspace/artifact`
 
