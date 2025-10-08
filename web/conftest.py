@@ -1,6 +1,7 @@
 """
 conftest.py file
 """
+# pylint: disable=duplicate-code
 
 import os
 from datetime import datetime
@@ -19,7 +20,7 @@ log = Logger(__name__)
 
 
 @pytest.fixture(autouse=True, scope="session")
-def add_loggers(request) -> None:
+def add_loggers() -> None:
     """
     The fixture to configure loggers
     It uses built-in pytest arguments to configure loggigng level and files
@@ -40,7 +41,7 @@ def add_loggers(request) -> None:
 
 
 @pytest.fixture(scope="session")
-def screenshot_dir(pytestconfig) -> str:
+def screenshot_dir() -> str:
     """
     Getting screenshot directory
     """
@@ -99,7 +100,7 @@ def driver(pytestconfig):
     _driver.quit()
 
 
-@pytest.fixture(autouse=True, scope="class")
+@pytest.fixture(autouse=True, scope="function")
 def setup_for_testing(request, driver):
     """
     Setting up pages for testing

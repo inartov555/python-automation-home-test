@@ -1,6 +1,7 @@
 """
 conftest.py file
 """
+# pylint: disable=duplicate-code
 
 import os
 from datetime import datetime
@@ -15,7 +16,7 @@ log = Logger(__name__)
 
 
 @pytest.fixture(autouse=True, scope="session")
-def add_loggers(request) -> None:
+def add_loggers() -> None:
     """
     The fixture to configure loggers
     It uses built-in pytest arguments to configure loggigng level and files
