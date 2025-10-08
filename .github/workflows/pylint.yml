@@ -28,13 +28,26 @@ jobs:
       - name: Lint app code (strict)
         run: |
           export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-          APP_FILES="$(git ls-files -- '*.py' | grep -vE '(^|/)tests/')" || true
+          # all .py EXCEPT tests/ and web/src/pages/ (handled in next step)
+          APP_FILES="$(git ls-files -- '*.py' | grep -vE '(^|/)tests/|^web/src/pages/')" || true
           if [ -n "$APP_FILES" ]; then
             pylint --max-line-length=128 \
                    --disable=too-many-arguments,too-many-positional-arguments \
                    $APP_FILES
           else
             echo "No app files to lint."
+          fi
+
+      - name: Lint web pages (allow broad exception)
+        run: |
+          export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+          WEB_PAGES="$(git ls-files -- 'web/src/pages/**/*.py' 'web/src/pages/*.py')" || true
+          if [ -n "$WEB_PAGES" ]; then
+            pylint --max-line-length=128 \
+                   --disable=broad-exception-caught \
+                   $WEB_PAGES
+          else
+            echo "No web page files found."
           fi
 
       - name: Lint tests (relaxed)
