@@ -1,3 +1,7 @@
+"""
+Twitch mobile tests
+"""
+
 import pytest
 
 from tools.logger.logger import Logger
@@ -9,11 +13,11 @@ log = Logger(__name__)
 
 @pytest.mark.mobile
 class TestTwitchMobile:
-    """
-    Twitch mobile tests
-    """
 
     def test_search_and_open_streamer(self, base_url):
+        """
+        Search and open streamer
+        """
         # 1. Open home
         self.home_page.open(base_url)
         # 2. Tap search icon
@@ -29,4 +33,4 @@ class TestTwitchMobile:
         # 7. Taking a screenshot
         screenshot_path = timestamped_path("streamer", "png")
         self.driver.save_screenshot(screenshot_path)
-        self.log.debug(f"Saved screenshot: {screenshot_path}")
+        log.debug(f"Saved screenshot: {screenshot_path}")

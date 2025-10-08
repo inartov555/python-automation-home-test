@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from .base_page import BasePage
 from tools.logger.logger import Logger
+from web.src.base_page import BasePage
 
 
 log = Logger(__name__)

@@ -1,7 +1,8 @@
 import json
-import requests
 import time
 from pprint import pformat
+
+import requests
 from requests import Response
 
 from tools.logger.logger import Logger
@@ -68,7 +69,7 @@ class ApiBase:
         if not headers:
             headers = {}
         client = requests.session()
-        url = '%s://%s:%s%s' % (self.protocol, self.host, self.port, uri)
+        url = f"{self.protocol}://{self.host}:{self.port}{uri}"
         if headers:
             self.headers.update(headers)
         self._unique_request_id_increment += 1
@@ -151,14 +152,19 @@ class ApiJsonRequest(ApiBase):
             host (str): e.g. google.com
             port (dict): e.g. 443
         """
-        super(ApiJsonRequest, self).__init__(protocol, host, port)
-        log = Logger(__name__)
+        super().__init__(protocol, host, port)
         headers = {"Content-Type": "application/json",
                    "Accept": "application/json"}
         self.append_headers(headers)
 
-    def make_request(self, method, uri, payload={}, query_params={}, headers={},
-                     is_return_resp_obj=False, raise_error_if_failed=None):
+    def make_request(self,
+                     method: str,
+                     uri: str,
+                     payload: dict = None,
+                     query_params: dict = None,
+                     headers: dict = None,
+                     is_return_resp_obj: bool = False,
+                     raise_error_if_failed: bool = None):
         """
         Args:
             method (str): one of ("get", "post", "put", "delete")
@@ -174,11 +180,19 @@ class ApiJsonRequest(ApiBase):
         Returns:
             json, (list/dict)
         """
+        if not payload:
+            payload = {}
+        if not query_params:
+            query_params = {}
+        if not headers:
+            headers = {}
         response_obj = super().make_request(method, uri, payload, query_params, headers)
         if is_return_resp_obj:
             return response_obj
         resp_text = response_obj.text
-        response_json = json.loads(response_text)
+        response_json = json.loads(resp_text)
         # Response validation can be added here.
         # Use raise_error_if_failed and raise AssertionError if validation failed and raise_error_if_failed is True
+        if raise_error_if_failed:
+            pass
         return response_json

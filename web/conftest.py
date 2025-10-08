@@ -1,3 +1,7 @@
+"""
+conftest.py file
+"""
+
 import os
 from datetime import datetime
 
@@ -5,15 +9,10 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+from tools.logger.logger import Logger
 from src.pages.home_page import HomePage
 from src.pages.search_page import SearchPage
 from src.pages.streamer_page import StreamerPage
-from tools.logger.logger import Logger
-
-
-"""
-conftest.py file
-"""
 
 
 log = Logger(__name__)

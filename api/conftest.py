@@ -1,15 +1,14 @@
+"""
+conftest.py file
+"""
+
 import os
 from datetime import datetime
 
 import pytest
 
-from api.api.public_api import PublicApi
 from tools.logger.logger import Logger
-
-
-"""
-conftest.py file
-"""
+from api.api.public_api import PublicApi
 
 
 log = Logger(__name__)
