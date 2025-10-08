@@ -194,7 +194,7 @@ class BasePage:
             return els.find(visible) || null;
             """
             return self.driver.execute_script(js, value, float(min_ratio), int(top_margin), int(bottom_margin))
-        elif by == By.XPATH:
+        if by == By.XPATH:
             js = """
             const xpath = arguments[0], ratio = arguments[1], topM = arguments[2], bottomM = arguments[3];
             const vh = window.innerHeight || document.documentElement.clientHeight;
@@ -222,5 +222,4 @@ class BasePage:
             return els.find(visible) || null;
             """
             return self.driver.execute_script(js, value, float(min_ratio), int(top_margin), int(bottom_margin))
-        else:
-            raise ValueError("Use CSS_SELECTOR or XPATH for this helper.")
+        raise ValueError("Use CSS_SELECTOR or XPATH for this helper.")
