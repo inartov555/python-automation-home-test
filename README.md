@@ -1,5 +1,6 @@
 ## Note:
-!!! This is just an example of the code, this framework cannot be used for testing Twitch or running multiple times !!!
+ - !!! This is just an example of the code, this framework cannot be used for testing Twitch or running multiple times !!!
+ - The UI of the web site may change, so tests may not work later
 
 ## ▶️ How to run
 NOTE: when you start the source run_tests.sh script, it copies the project to other directory to avoid adding cached files,

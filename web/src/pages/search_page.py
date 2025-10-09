@@ -5,8 +5,8 @@ Search page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from tools.logger.logger import Logger
-from web.src.pages.base_page import BasePage
+from python_pytest_selenium_web_api_test.tools.logger.logger import Logger
+from python_pytest_selenium_web_api_test.web.src.pages.base_page import BasePage
 
 
 log = Logger(__name__)

@@ -4,8 +4,8 @@ Twitch mobile tests
 
 import pytest
 
-from tools.logger.logger import Logger
-from web.conftest import timestamped_path
+from python_pytest_selenium_web_api_test.tools.logger.logger import Logger
+from python_pytest_selenium_web_api_test.web.conftest import timestamped_path
 
 
 log = Logger(__name__)

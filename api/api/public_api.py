@@ -2,8 +2,8 @@
 API methods
 """
 
-from tools.logger.logger import Logger
-from api.api.api_base import ApiJsonRequest
+from python_pytest_selenium_web_api_test.tools.logger.logger import Logger
+from python_pytest_selenium_web_api_test.api.api.api_base import ApiJsonRequest
 
 
 log = Logger(__name__)

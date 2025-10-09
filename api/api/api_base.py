@@ -9,7 +9,7 @@ from pprint import pformat
 import requests
 from requests import Response
 
-from tools.logger.logger import Logger
+from python_pytest_selenium_web_api_test.tools.logger.logger import Logger
 
 
 log = Logger(__name__)

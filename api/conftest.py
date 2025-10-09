@@ -8,8 +8,8 @@ from datetime import datetime
 
 import pytest
 
-from tools.logger.logger import Logger
-from api.api.public_api import PublicApi
+from python_pytest_selenium_web_api_test.tools.logger.logger import Logger
+from python_pytest_selenium_web_api_test.api.api.public_api import PublicApi
 
 
 log = Logger(__name__)

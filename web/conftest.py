@@ -10,10 +10,10 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from tools.logger.logger import Logger
-from web.src.pages.home_page import HomePage
-from web.src.pages.search_page import SearchPage
-from web.src.pages.streamer_page import StreamerPage
+from python_pytest_selenium_web_api_test.tools.logger.logger import Logger
+from python_pytest_selenium_web_api_test.web.src.pages.home_page import HomePage
+from python_pytest_selenium_web_api_test.web.src.pages.search_page import SearchPage
+from python_pytest_selenium_web_api_test.web.src.pages.streamer_page import StreamerPage
 
 
 log = Logger(__name__)
