@@ -1,8 +1,12 @@
 ## What it is
 Automation framework (example).
 
+---
+
 ## Note:
  - !!! This is just an example of the code; this framework cannot be used for testing Twitch or running multiple times !!!
+
+---
 
 ## ▶️ How to run
 NOTE: When you start the source run_tests.sh script, it copies the project to another directory to avoid adding cached files.
