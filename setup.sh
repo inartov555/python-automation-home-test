@@ -11,7 +11,7 @@ if [ -z $1 ]; then
   return 1
 fi
 
-# DEFAULT_REPO_PATH="$HOME/python-automation-home-test"
+# DEFAULT_REPO_PATH="$HOME/python_pytest_selenium_web_api_test"
 
 # Repo path defaults to $DEFAULT_REPO_PATH
 # if [[ -z "$1" ]]; then
