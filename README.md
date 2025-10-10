@@ -1,13 +1,16 @@
+## What it is
+Automation framework (example).
+
 ## Note:
- - !!! This is just an example of the code, this framework cannot be used for testing Twitch or running multiple times !!!
+ - !!! This is just an example of the code; this framework cannot be used for testing Twitch or running multiple times !!!
 
 ## ▶️ How to run
-NOTE: when you start the source run_tests.sh script, it copies the project to other directory to avoid adding cached files,
- and venv directory to the project folder
+NOTE: When you start the source run_tests.sh script, it copies the project to another directory to avoid adding cached files.
+ and the venv directory to the project folder
 
 To start tests, you need:
 - Run the run_tests.sh file next way: ```source run_tests.sh MODULE_NAME PATH_TO_THE_PROJECT```
-  (where `MODULE_NAME` can be one of (api, web,), `PATH_TO_THE_PROJECT` - the path to the project, e.g., `/home/user/python-automation-home-test`)
+  (where `MODULE_NAME` can be one of (api, web), `PATH_TO_THE_PROJECT` - the path to the project, e.g., `/home/user/python-automation-home-test`)
 - Copied project folder, run results like logs, screenshots, etc., are located in: `/home/$user_name/TEST1/workspace`
 - Artifacts (run results, logs, screenshots, etc.) are located in: `/home/$user_name/TEST1/workspace/artifact`
 
@@ -52,9 +55,9 @@ Useful options:
 This project contains example automated API tests using the public, no‑auth **Cat Facts API** (`https://catfact.ninja`). It demonstrates parametrization, schema checks, and negative testing.
 
 ## ✅ What the tests do (api module)
-1. Make request
-2. Retrieve data from response
-3. Compare to expected result
+1. Make a request
+2. Retrieve data from the response
+3. Compare to the expected result
 
 ---
 
